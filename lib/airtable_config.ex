@@ -1,6 +1,4 @@
 defmodule AirtableConfig do
-  require Logger
-
   defmacro __using__(opts \\ []) do
     quote do
       def start_link do
@@ -16,12 +14,11 @@ defmodule AirtableConfig do
         try do
           config = fetch_all([], 0)
           Agent.update(__MODULE__, fn _ -> config end)
-          Logger.info("#{table()}: updated at #{inspect(DateTime.utc_now())}")
+          IO.puts("#{table()}: updated at #{inspect(DateTime.utc_now())}")
         rescue
           error ->
-            Logger.error(
-              "Could not updated config at #{inspect(DateTime.utc_now())}: #{inspect(error)}. Will try again next cycle.",
-              error
+            IO.puts(
+              "Could not updated config at #{inspect(DateTime.utc_now())}: #{inspect(error)}. Will try again next cycle."
             )
         end
       end
