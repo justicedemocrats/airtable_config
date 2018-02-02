@@ -1,5 +1,5 @@
 defmodule AirtableConfig do
-  defmacro __using__(opts \\ []) do
+  defmacro __using__(_opts \\ []) do
     quote do
       def start_link do
         Agent.start_link(
@@ -39,7 +39,7 @@ defmodule AirtableConfig do
 
         decoded = Poison.decode!(body)
 
-        records =
+        new_records =
           decoded["records"]
           |> Enum.filter(&filter_record/1)
           |> Enum.map(&process_record/1)
@@ -48,7 +48,7 @@ defmodule AirtableConfig do
         if Map.has_key?(decoded, "offset") do
           fetch_all(new_records, decoded["offset"])
         else
-          Enum.into(all_records, into_what())
+          Enum.into(new_records, into_what())
         end
       end
     end
