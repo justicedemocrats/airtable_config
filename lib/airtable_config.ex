@@ -1,5 +1,5 @@
 defmodule AirtableConfig do
-  defmacro __using__() do
+  defmacro __using__(opts \\ []) do
     quote do
       def start_link do
         Agent.start_link(
@@ -35,7 +35,7 @@ defmodule AirtableConfig do
             headers: [
               Authorization: "Bearer #{key}"
             ],
-            query: [offset: offset]
+            query: [offset: offset, view: view()]
           )
 
         decoded = Poison.decode!(body)
