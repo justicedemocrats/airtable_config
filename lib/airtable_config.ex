@@ -4,7 +4,7 @@ defmodule AirtableConfig do
       def start_link do
         Agent.start_link(
           fn ->
-            fetch_all()
+            fetch_all([], 0)
           end,
           name: __MODULE__
         )
