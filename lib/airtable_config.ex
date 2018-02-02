@@ -1,5 +1,7 @@
 defmodule AirtableConfig do
   defmacro __using__(opts \\ []) do
+    require Logger
+
     quote do
       def start_link do
         Agent.start_link(
