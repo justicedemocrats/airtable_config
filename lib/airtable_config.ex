@@ -43,7 +43,7 @@ defmodule AirtableConfig do
           decoded["records"]
           |> Enum.filter(&filter_record/1)
           |> Enum.map(&process_record/1)
-          |> Enum.concat(records)
+          |> Enum.concat(prev_records)
 
         if Map.has_key?(decoded, "offset") do
           fetch_all(new_records, decoded["offset"])
